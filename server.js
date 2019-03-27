@@ -1,8 +1,15 @@
 
-const app = require('https').createServer(handler)
-const io = require('socket.io')(app) //wrap server app in socket io capability
 const fs = require("fs") //need to read static files
 const url = require("url") //to parse url strings
+
+var options = {
+  key: fs.readFileSync('ssl/client-key.pem'),
+  cert: fs.readFileSync('ssl/client-cert.crt'),
+
+};
+
+const app = require('https').createServer(options,handler)
+const io = require('socket.io')(app) //wrap server app in socket io capability
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT) //start server listening on PORT
@@ -429,6 +436,7 @@ io.on('connection', function(socket) {
 
 
 function handler(request, response) {
+  console.log(request.url)
   let urlObj = url.parse(request.url, true, false)
   let receivedData = ""
 
@@ -441,7 +449,7 @@ function handler(request, response) {
   request.on("end", function() {
 
     if (request.method == "GET") {
-      console.log(urlObj.pathname)
+      //console.log(urlObj.pathname)
       if (urlObj.pathname=='/') urlObj.pathname = '/canvasWithTimer.html'
       //handle GET requests as static file requests
       fs.readFile(ROOT_DIR + urlObj.pathname, function(err, data) {
@@ -465,4 +473,4 @@ function handler(request, response) {
 
 console.log("Server Running at PORT: 3000  CNTL-C to quit")
 console.log("To Test:")
-console.log("Open several browsers at: http://localhost:3000/canvasWithTimer.html")
+console.log("Open several browsers at: http://localhost:3000")
