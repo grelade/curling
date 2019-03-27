@@ -1,0 +1,24 @@
+{
+  "name": "curling",
+  "version": "1.0.0",
+  "description": "curling game",
+  "main": "server.js",
+  "dependencies": {
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "none",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grelade/curling.git"
+  },
+  "author": "J. Grela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grelade/curling/issues"
+  },
+  "homepage": "https://github.com/grelade/curling#readme"
+}

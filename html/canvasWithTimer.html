@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!--
+- Example shows drawing strings on the canvas and
+  dragging individual strings around with the mouse.
+
+  In this example the HTML elements are not being
+  dragged. The strings are javascript objects.
+
+  When the canvas reacts to the mouse down event
+  other event handlers will be added to the DOM
+  to handle the mouse move and mouse release
+
+  Notice in this source file there are no pre-attached
+  event handlers. They will be added using jQuery in the
+  supporting javascript file.
+
+
+-->
+<html>
+   <head>
+     <title>Canvas Size</title>
+     <script src="jquery-1.11.3.js"></script>
+
+      <style>
+
+      canvas {
+ 		    margin: 0px;
+        padding:0px;
+ 		 }
+
+
+      div {
+        padding:0px;
+        margin:0px;
+      }
+
+      body {
+         background: #eeeeee;
+         font-family: monospace,sans-serif;
+         font-variant:small-caps;
+      }
+
+      .hidden {
+        display:none;
+      }
+
+
+      p {
+        margin:0px;
+      }
+
+      .bgFont {
+        font-family: monospace,sans-serif;
+        font-weight:bold;
+        font-variant:small-caps;
+        padding:5px;
+      }
+
+      .bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: -1;
+        color:#eeeeee;
+        overflow: hidden;
+        f
+        font-size:16px;
+        font-weight:bold;
+        text-align:right;
+      }
+      .bgPadding1 {
+          padding-right:5px;
+          padding-top:25px;
+      }
+      .bgPadding2 {
+          padding-right:5px;
+          padding-top:175px;
+      }
+      .bgColor1 {
+        background:#cecece;
+      }
+      .bgColor2 {
+        background:#c0c0c0;
+      }
+      .bgColor3 {
+        background:#a9a9a9;
+      }
+      .playerOne {
+        background:green;
+      }
+      .playerTwo {
+        background:red;
+      }
+      .spectator {
+        background:#555555;
+      }
+      .button {
+        padding:0px;
+        margin:0px;
+        font-weight:bold;
+        font-family: monospace,sans-serif;
+        font-variant:small-caps;
+        font-size:14px;
+        background:#eeeeee;
+        border: 0px solid white;
+        padding-left:5px;
+        padding-right:5px;
+      }
+
+      table {
+        margin:0px auto;
+        border-collapse: collapse;
+
+      }
+
+      td {
+        padding-left:10px;
+        padding-right:10px;
+        border-right: solid 1px #000;
+        border-left: solid 1px #000;
+      }
+
+      #titletr {
+        font-weight:bold;
+      }
+
+      #playerList {
+        font-weight:normal;
+      }
+
+      #responseField {
+        font-weight:normal;
+      }
+
+      </style>
+   </head>
+
+  <body>
+<div style="overflow:hidden;">
+  <div style="float:left;display:inline-block;">
+    <div style="float:left;height:600px">
+      <canvas width=400 height=600 id="field">
+      </canvas>
+    </div>
+    <div style="float:left;margin:0px;padding-left:10px;padding-right:10px;">
+      <div style="height:100px">
+        <div>
+          <div style="position:relative;width:33%;float:left;display:inline-block;height:50px;">
+            <div class="bg bgPadding1 bgColor1">Your Game</div>
+            <p id="currentGame" class="bgFont"></p>
+          </div>
+          <div style="position:relative;width:33%;float:left;display:inline-block;height:50px">
+            <div class="bg bgPadding1 bgColor2">Your Name</div>
+            <p id="currentPlayer" class="bgFont">Jacek</p>
+          </div>
+          <div style="position:relative;width:34%;float:left;display:inline-block;height:50px">
+            <div id="currentRoleDIV" class="bg bgPadding1 bgColor1">Your Role</div>
+            <p id="currentRole" class="bgFont"></p>
+          </div>
+        </div>
+        <div>
+          <div style="position:relative;height:50px;display:inline-block;width:33%;float:left;">
+            <div id="gamePhaseDIV" class="bg bgPadding1 bgColor2">Game Phase</div>
+            <p id="gamePhase" class="bgFont"></p>
+          </div>
+          <div style="position:relative;height:50px;display:inline-block;width:67%;float:left;">
+            <div class="bg bgPadding1 bgColor3">Enter Game</div>
+            <p id="buttons" class="bgFont" align="left">
+              <input type="button" value="Create" onClick="handleNewGameButton()" class="button"/>
+              <input type="button" value="Join" onClick="handleJoinGameButton()" class="button"/>
+              <input type="button" value="Spectate" onClick="handleSpectateGameButton()" class="button"/>
+              <br/>
+              <input type = "text" id="gameNameField" name = "gameName"  value="" size = "10" class="button"/>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div style="height:500px">
+        <canvas width=400 height=500 id="field_zoom">
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <div style="display:inline-block;width:300px;height:600px">
+    <div style="position:relative;height:200px">
+        <div class="bg bgPadding2 bgColor1">Games List</div>
+        <p id="gamesList" class="bgFont">
+        </p>
+    </div>
+    <div style="position:relative;height:200px">
+        <div class="bg bgPadding2 bgColor2">Player List</div>
+        <p id="playerList" class="bgFont">player 1<br/>player 2<br/>player 3<br/>player 4</p>
+    </div>
+    <div style="position:relative;height:200px">
+        <div class="bg bgPadding2 bgColor1">Server Response</div>
+        <p id="responseField" class="bgFont">some server info<br/>some server info 2</p>
+    </div>
+  </div>
+
+</div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src='canvasWithTimer.js'></script>
+  </body>
+</html>
