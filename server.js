@@ -1,5 +1,5 @@
 
-const app = require('http').createServer(handler)
+const app = require('https').createServer(handler)
 const io = require('socket.io')(app) //wrap server app in socket io capability
 const fs = require("fs") //need to read static files
 const url = require("url") //to parse url strings

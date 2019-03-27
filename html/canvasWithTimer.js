@@ -1,7 +1,7 @@
 
 
 //connect to server and retain the socket
-let socket = io('http://' + window.document.location.host)
+let socket = io('https://' + window.document.location.host)
 //print()
 document.getElementById("responseField").innerHTML = window.document.location.host
 //let socket = io('http://localhost:3000');
