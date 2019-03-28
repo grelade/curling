@@ -4,8 +4,7 @@ const url = require("url") //to parse url strings
 
 var options = {
   key: fs.readFileSync('ssl/client-key.pem'),
-  cert: fs.readFileSync('ssl/client-cert.crt'),
-
+  cert: fs.readFileSync('ssl/client-cert.crt')
 };
 
 const app = require('https').createServer(options,handler)
