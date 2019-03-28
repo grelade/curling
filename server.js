@@ -448,8 +448,8 @@ function handler(request, response) {
   request.on("end", function() {
 
     if (request.method == "GET") {
-      //console.log(urlObj.pathname)
-      if (urlObj.pathname=='/') urlObj.pathname = '/canvasWithTimer.html'
+      console.log(urlObj.pathname)
+      if (urlObj.pathname=='/') {urlObj.pathname = '/canvasWithTimer.html'}
       //handle GET requests as static file requests
       fs.readFile(ROOT_DIR + urlObj.pathname, function(err, data) {
         if (err) {
