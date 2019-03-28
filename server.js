@@ -10,7 +10,8 @@ var options = {
 const app = require('https').createServer(options,handler)
 const io = require('socket.io')(app) //wrap server app in socket io capability
 
-const PORT = process.env.PORT || 3000
+//const PORT = process.env.PORT || 3000
+const PORT = 3000
 app.listen(PORT) //start server listening on PORT
 
 const ROOT_DIR = "html" //dir to serve static files from
