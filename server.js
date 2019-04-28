@@ -1,20 +1,26 @@
 
 const fs = require("fs") //need to read static files
 const url = require("url") //to parse url strings
+const path = require("path")
+const express = require("express")
+// var options = {
+//   key: fs.readFileSync('ssl/client-key.pem'),
+//   cert: fs.readFileSync('ssl/client-cert.crt')
+// };
 
-var options = {
-  key: fs.readFileSync('ssl/client-key.pem'),
-  cert: fs.readFileSync('ssl/client-cert.crt')
-};
-
-const app = require('https').createServer(options,handler)
-const io = require('socket.io')(app) //wrap server app in socket io capability
+//const app = require('http').createServer(handler)
+const app = express()
 
 //const PORT = process.env.PORT || 3000
 const PORT = 3000
-app.listen(PORT) //start server listening on PORT
+server = app.listen(PORT, function() {
+  console.log("Server Running at PORT: 3000  CNTL-C to quit")
+  console.log("To Test:")
+  console.log("Open several browsers at: http://localhost:3000")
+}) //start server listening on PORT
 
-const ROOT_DIR = "html" //dir to serve static files from
+
+const io = require('socket.io')(server) //wrap server app in socket io capability
 
 const MIME_TYPES = {
   css: "text/css",
@@ -30,6 +36,12 @@ const MIME_TYPES = {
   svg: "image/svg+xml",
   txt: "text/plain"
 }
+
+app.use(express.static(path.join(__dirname, 'html')))
+app.get('/', function(req, res) {
+  //res.send('dsads')
+  res.sendFile(__dirname + '/html/canvasWithTimer.html')
+})
 
 function get_mime(filename) {
   for (let ext in MIME_TYPES) {
@@ -101,7 +113,6 @@ function playerExists(playerName) {
   return mask;
 }
 
-
 //remove player from the game info when he disconnects or leaves in other way
 function removePlayerFromGame(player,game) {
   if (io.sockets.adapter.rooms[game]) {
@@ -109,7 +120,6 @@ function removePlayerFromGame(player,game) {
     if (io.sockets.adapter.rooms[game].playerTwo == player) io.sockets.adapter.rooms[game].playerTwo = "";
   }
 }
-
 
 // GAME RELATED FUNCTIONS
 
@@ -154,10 +164,6 @@ function isGameFree(gameName) {
     return {isFree: gameFree, freePlayer: freePlayer};
   };
 }
-
-
-
-
 
 // function to update the position of all stones; takes care of collisions and friction
 function updateStones(stones) {
@@ -432,45 +438,3 @@ io.on('connection', function(socket) {
 
   });
 })
-
-
-
-function handler(request, response) {
-  console.log(request.url)
-  let urlObj = url.parse(request.url, true, false)
-  let receivedData = ""
-
-  //attached event handlers to collect the message data
-  request.on("data", function(chunk) {
-    receivedData += chunk
-  })
-
-  //event handler for the end of the message
-  request.on("end", function() {
-
-    if (request.method == "GET") {
-      console.log(urlObj.pathname)
-      if (urlObj.pathname=='/') {urlObj.pathname = '/canvasWithTimer.html'}
-      //handle GET requests as static file requests
-      fs.readFile(ROOT_DIR + urlObj.pathname, function(err, data) {
-        if (err) {
-          //report error to console
-          console.log("ERROR: " + JSON.stringify(err))
-          //respond with not found 404 to client
-          response.writeHead(404)
-          response.end(JSON.stringify(err))
-          return
-        }
-        response.writeHead(200, {
-          "Content-Type": get_mime(urlObj.pathname)
-        })
-        response.end(data)
-      })
-    }
-
-  })
-}
-
-console.log("Server Running at PORT: 3000  CNTL-C to quit")
-console.log("To Test:")
-console.log("Open several browsers at: http://localhost:3000")
