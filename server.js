@@ -12,13 +12,19 @@ const express = require("express")
 const app = express()
 
 //const PORT = process.env.PORT || 3000
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 server = app.listen(PORT, function() {
   console.log("Server Running at PORT: 3000  CNTL-C to quit")
   console.log("To Test:")
   console.log("Open several browsers at: http://localhost:3000")
 }) //start server listening on PORT
 
+
+app.use(express.static(path.join(__dirname, 'html')))
+app.get('/', function(req, res) {
+  //res.send('dsads')
+  res.sendFile(__dirname + '/html/canvasWithTimer.html')
+})
 
 const io = require('socket.io')(server) //wrap server app in socket io capability
 
@@ -37,11 +43,6 @@ const MIME_TYPES = {
   txt: "text/plain"
 }
 
-app.use(express.static(path.join(__dirname, 'html')))
-app.get('/', function(req, res) {
-  //res.send('dsads')
-  res.sendFile(__dirname + '/html/canvasWithTimer.html')
-})
 
 function get_mime(filename) {
   for (let ext in MIME_TYPES) {
