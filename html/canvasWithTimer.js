@@ -2,6 +2,7 @@
 
 //connect to server and retain the socket
 let socket = io('//' + window.document.location.host)
+console.log('//' + window.document.location.host)
 //let socket = io('http://localhost:3000');
 
 
