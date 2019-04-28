@@ -1,9 +1,9 @@
 
 
 //connect to server and retain the socket
-let socket = io('//' + window.document.location.host)
-console.log('//' + window.document.location.host)
-//let socket = io('http://localhost:3000');
+//let socket = io('//' + window.document.location.host)
+//console.log('//' + window.document.location.host)
+let socket = io('http://localhost:3000');
 
 
 let timer //used to control the free moving word
