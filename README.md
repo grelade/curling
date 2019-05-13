@@ -1,14 +1,20 @@
-tested on: nodejs v8.10.0 on xubuntu
+curling v0.1
 
+1. Introduction
 
-Modules required:
-npm install socket.io
+Game of curling server based on node.js with socket.io. Contains game mechanics and online play capability. To see the game at work visit:
+https://coorling.herokuapp.com/
 
-To run the server:
+2. Installation
+
+First run
+npm install
+
+And then the server 
 node server.js
 
-and the client:
-http://localhost:3000/canvasWithTimer.html
+The client :
+http://localhost:3000
 
 To play the game:
 1) first name the game through the input
