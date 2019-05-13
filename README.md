@@ -18,9 +18,11 @@ node server.js
 The local client is now:
 http://localhost:3000
 
-3. Playing the game
-1) first name the game through the input
-2) second create it with CREATE button.
+3. Gameplay
+
+To play a game:
+a) name the game through the input
+b) second create it with CREATE button.
 
 The second player can join through JOIN.
 Spectators can likewise join through SPECTATE.
