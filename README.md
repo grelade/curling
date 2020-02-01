@@ -1,27 +1,30 @@
-curling v0.1
+# curling v0.1
 
-1. Introduction
+## Introduction
 
-Game of curling server based on node.js with socket.io. Contains game mechanics and online play capability. To see the game at work visit:
+Game of curling. Code contains in-game mechanics and online play capability. To see the game at work visit:
 https://coorling.herokuapp.com/
 
-2. Installation
+Runs on node.js with socket.io and express.
 
-First run
+## Installation
+
+First install all the modules and then simply run the server:
+```
 npm install
-
-And then the server 
 node server.js
-
-The client :
+```
+The client is found locally under:
 http://localhost:3000
 
-To play the game:
-1) first name the game through the input
-2) second create it with CREATE button.
+## Gameplay
+
+To play a game:
+* name the game through the input
+* second create it with CREATE button.
 
 The second player can join through JOIN.
 Spectators can likewise join through SPECTATE.
 
 Lists of games and players are shown on the right hand side. Some rudimentary server messages are also shown on the right.
-Current game phase and players' color are suggested by the backgrounds
+Current game phase and players' color are suggested by the backgrounds.
