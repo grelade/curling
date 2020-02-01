@@ -7,6 +7,8 @@ https://coorling.herokuapp.com/
 
 Runs on node.js with socket.io and express.
 
+![](imgs/curling.gif)
+
 ## Installation
 
 First install all the modules and then simply run the server:
